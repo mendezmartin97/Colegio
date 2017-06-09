@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ColegioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AlumnoProfesor">
+          <Key>
+            <PropertyRef Name="Alumnos_Id" />
+            <PropertyRef Name="Profesores_Id" />
+          </Key>
+          <Property Name="Alumnos_Id" Type="int" Nullable="false" />
+          <Property Name="Profesores_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlumnoSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Legajo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Mail" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProfesorSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Mail" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AlumnoProfesor_Alumno">
+          <End Role="AlumnoSet" Type="Self.AlumnoSet" Multiplicity="1" />
+          <End Role="AlumnoProfesor" Type="Self.AlumnoProfesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlumnoSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlumnoProfesor">
+              <PropertyRef Name="Alumnos_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoProfesor_Profesor">
+          <End Role="ProfesorSet" Type="Self.ProfesorSet" Multiplicity="1" />
+          <End Role="AlumnoProfesor" Type="Self.AlumnoProfesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfesorSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlumnoProfesor">
+              <PropertyRef Name="Profesores_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ColegioModelStoreContainer">
+          <EntitySet Name="AlumnoProfesor" EntityType="Self.AlumnoProfesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlumnoSet" EntityType="Self.AlumnoSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProfesorSet" EntityType="Self.ProfesorSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AlumnoProfesor_Alumno" Association="Self.FK_AlumnoProfesor_Alumno">
+            <End Role="AlumnoSet" EntitySet="AlumnoSet" />
+            <End Role="AlumnoProfesor" EntitySet="AlumnoProfesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoProfesor_Profesor" Association="Self.FK_AlumnoProfesor_Profesor">
+            <End Role="ProfesorSet" EntitySet="ProfesorSet" />
+            <End Role="AlumnoProfesor" EntitySet="AlumnoProfesor" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ColegioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AlumnoSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Legajo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ProfesorSets" Relationship="Self.AlumnoProfesor" FromRole="AlumnoSet" ToRole="ProfesorSet" />
+        </EntityType>
+        <EntityType Name="ProfesorSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AlumnoSets" Relationship="Self.AlumnoProfesor" FromRole="ProfesorSet" ToRole="AlumnoSet" />
+        </EntityType>
+        <Association Name="AlumnoProfesor">
+          <End Role="AlumnoSet" Type="Self.AlumnoSet" Multiplicity="*" />
+          <End Role="ProfesorSet" Type="Self.ProfesorSet" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ColegioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AlumnoSets" EntityType="Self.AlumnoSet" />
+          <EntitySet Name="ProfesorSets" EntityType="Self.ProfesorSet" />
+          <AssociationSet Name="AlumnoProfesor" Association="Self.AlumnoProfesor">
+            <End Role="AlumnoSet" EntitySet="AlumnoSets" />
+            <End Role="ProfesorSet" EntitySet="ProfesorSets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ColegioModelStoreContainer" CdmEntityContainer="ColegioEntities">
+          <EntitySetMapping Name="AlumnoSets">
+            <EntityTypeMapping TypeName="ColegioModel.AlumnoSet">
+              <MappingFragment StoreEntitySet="AlumnoSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProfesorSets">
+            <EntityTypeMapping TypeName="ColegioModel.ProfesorSet">
+              <MappingFragment StoreEntitySet="ProfesorSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AlumnoProfesor" TypeName="ColegioModel.AlumnoProfesor" StoreEntitySet="AlumnoProfesor">
+            <EndProperty Name="AlumnoSet">
+              <ScalarProperty Name="Id" ColumnName="Alumnos_Id" />
+            </EndProperty>
+            <EndProperty Name="ProfesorSet">
+              <ScalarProperty Name="Id" ColumnName="Profesores_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
