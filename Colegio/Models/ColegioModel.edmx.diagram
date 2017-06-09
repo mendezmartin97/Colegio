@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="5b18a439652a4664b6ccc9feda9247eb" Name="Diagram1">
         <EntityTypeShape EntityType="ColegioModel.AlumnoSet" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.ProfesorSet" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.ProfesorSet" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="ColegioModel.AlumnoProfesor" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
